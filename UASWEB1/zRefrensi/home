@@ -1,0 +1,38 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Utama</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Selamat Datang di Website Kami</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="about.html">Tentang Kami</a></li>
+            <li><a href="contact.html">Kontak</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="info">
+            <h2>Info Perusahaan</h2>
+            <p>Kami adalah perusahaan yang bergerak di bidang...</p>
+        </section>
+
+        <section class="produk">
+            <h2>Produk Kami</h2>
+            <p>Produk kami terdiri dari...</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2022. All rights reserved.</p>
+    </footer>
+</body>
+</html>

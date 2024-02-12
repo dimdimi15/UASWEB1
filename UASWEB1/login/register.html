@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="../style/regis.css">
+</head>
+
+<body>
+    <main id="register-holder">
+        <h1 id="register-header">REGISTER</h1>
+        <form id="register-form">
+            <input type="text" name="user" id="user" class="register-form-field" placeholder="username" required>
+            <input type="password" name="pwd" id="pwd" class="register-form-field" placeholder="password" required>
+            <input type="name" name="name" id="name" class="register-form-field" placeholder="name" required>
+            <button type="button" onclick="registerUser()">Register</button>
+            <p>Sudah punya akun ? <a href="index.php">Login disini</a></p>
+        </form>
+
+        <script>
+            function registerUser() {
+                var username = document.getElementById('user').value;
+                var password = document.getElementById('pwd').value;
+                var name = document.getElementById('name').value;
+
+                // Buat objek FormData untuk mengirim data formulir
+                var formData = new FormData();
+                formData.append('user', username);
+                formData.append('pwd', password);
+                formData.append('name', name);
+
+                // Kirim permintaan menggunakan fetch API
+                fetch('https://client-server-dimas.000webhostapp.com/regist.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.status === 'success') {
+                            alert("Registrasi berhasil");
+                        } else {
+                            alert("Registrasi gagal: " + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert("Registrasi gagal");
+                    });
+            }
+        </script>
+    </main>
+</body>
+
+</html>

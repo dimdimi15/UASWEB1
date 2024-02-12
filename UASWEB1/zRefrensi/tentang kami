@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<title>Tentang Kami</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Tentang Kami</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="about.html">Tentang Kami</a></li>
+            <li><a href="contact.html">Kontak</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="tentang">
+            <h2>Sejarah Perusahaan</h2>
+            <p>Perusahaan kami berdiri sejak tahun...</p>
+        </section>
+
+        <section class="visi">
+            <h2>Visi Perusahaan</h2>
+            <p>Visi kami adalah untuk menjadi...</p>
+        </section>
+
+        <section class="misi">
+            <h2>Misi Perusahaan</h2>
+            <p>Misi kami adalah untuk meningkatkan kualitas hidup...</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2022. All rights reserved.</p>
+    </footer>
+</body>
+</html>

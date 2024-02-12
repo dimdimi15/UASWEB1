@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* CSS untuk footer */
+        footer {
+            background-color: #000080;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px; /* Mengatur margin atas */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="list.php">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                username
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end me-5">
+                                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                                <li><a class="dropdown-item" onclick="logout()">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="card mx-auto" style="max-width: 500px;">
+            <div class="card-header text-center">
+                <h5>Profile</h5>
+            </div>
+            <div class="card-body">
+                <form id="updateForm">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username"
+                            placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="old_password">Old Password:</label>
+                        <input type="password" class="form-control" id="old_password" name="old_password"
+                            placeholder="Enter old password">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password">New Password:</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password"
+                            placeholder="Enter new password">
+                    </div>
+                    <button type="button" class="btn btn-primary mr-2" onclick="updateProfile()">Update</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete
+                        Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete your account?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteProfile()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer style="background-color: #000080; color: #ffffff; text-align: center; padding: 10px;">
+        &copy;Copyright by 21552011451_Dimas Anggara_TIFRP221PB_UASWEB1
+    </footer>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        var sessionToken = localStorage.getItem('session_token');
+        var fd = new FormData();
+        fd.append('session_token', sessionToken);
+        axios.post('https://client-server-dimas.000webhostapp.com/profiles.php', fd)
+            .then(function (response) {
+                if (response.data.status === 'success') {
+                    var user = response.data.user_profile;
+                    var username = user.username;
+                    document.getElementById('navbarDropdown').innerText = username;
+                } else {
+                    console.error('Gagal mengambil data profil');
+                }
+            })
+            .catch(function (error) {
+                // Handle error
+                console.error(error);
+            });
+
+        function logout() {
+            var formData = new FormData();
+            formData.append('session_token', sessionToken);
+            if (sessionToken) {
+                // Kirim permintaan POST ke URL logout
+                axios.post('https://client-server-dimas.000webhostapp.com/logout.php', formData)
+                    .then(function (response) {
+                        // Handle response
+                        if (response.data.status === 'success') {
+                            // Hapus session token dari localStorage
+                            localStorage.removeItem('session_token');
+                            // Redirect ke halaman login atau halaman lainnya
+                            window.location.href = 'index.php'; // Ganti dengan halaman login atau halaman lain yang sesuai
+                        } else {
+                            // Jika ada kesalahan, tampilkan pesan kesalahan
+                            alert(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        // Handle error
+                        console.error(error);
+                        // Tampilkan pesan kesalahan jika terjadi kesalahan saat mengirim permintaan
+                        alert('Terjadi kesalahan saat melakukan logout.');
+                    });
+            } else {
+                // Jika session_token kosong, tampilkan pesan kesalahan
+                alert('Session token tidak ditemukan. Silakan login kembali.');
+            }
+        }
+
+        function deleteProfile() {
+            var sessionToken = localStorage.getItem('session_token'); // Ambil session token dari localStorage
+
+            var formData = new FormData();
+            formData.append('session_token', sessionToken); // Tambahkan session token ke FormData
+
+            axios.post('https://client-server-dimas.000webhostapp.com/deleteprofile.php', formData) // Kirim permintaan DELETE ke delete_profile.php
+                .then(function (response) {
+                    console.log(response.data);
+                    if (response.data.status === 'success') {
+                        // Hapus session token dari localStorage setelah profil dihapus
+                        localStorage.removeItem('session_token');
+
+                        // Redirect ke halaman login atau halaman lainnya
+                        window.location.href = 'index.php'; // Ganti dengan halaman login atau halaman lain yang sesuai
+                    } else {
+                        // Jika status tidak success
+                        console.log('Terjadi kesalahan: ' + response.data.message);
+                    }
+                })
+                .catch(function (error) {
+                    console.error(error);
+                    console.log('Terjadi kesalahan saat menghapus profil');
+                });
+        }
+
+
+
+        function updateProfile() {
+            var username = document.getElementById('username').value;
+            var name = document.getElementById('name').value;
+            var oldPassword = document.getElementById('old_password').value;
+            var newPassword = document.getElementById('new_password').value;
+
+            var fd = new FormData();
+            fd.append('username', username);
+            fd.append('name', name);
+            fd.append('oldPassword', oldPassword);
+            fd.append('newPassword', newPassword);
+            fd.append('session_token', sessionToken);
+
+            axios.post('https://client-server-dimas.000webhostapp.com/updateprofile.php', fd)
+                .then(function (response) {
+                    console.log(response.data);
+                    alert(response.data.message);
+                     window.location.href = 'profile.php';
+                })
+                .catch(function (error) {
+                    console.error(error);
+                    alert('Terjadi kesalahan saat memperbarui profil');
+                });
+        }
+
+
+
+        // Tambahkan event listener untuk form saat disubmit
+        document.getElementById('updateForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Hindari form untuk melakukan submit biasa
+            updateProfile(); // Panggil fungsi untuk mengirim permintaan pembaruan profil
+        });
+    </script>
+</body>
+
+</html>

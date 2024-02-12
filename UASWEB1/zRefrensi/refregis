@@ -1,0 +1,15 @@
+<!--<div class="page">
+        <div class="header">
+            <a id="signup">Signup</a>
+        </div>
+        <div id="errorMsg"></div>
+        <div class="content">
+            <form class="signup" name="signupForm" onsubmit="return validateSignupFomr()" method="POST">
+                <input type="text" name="name"  id="signName" placeholder="Username">
+                <input type="password" name="password"  id="signPassowrd" placeholder="Password">
+                <input type="submit" value="SignUp">
+                <p>Sudah punya akun ? 
+                    <a href="index.html">Login disini</a>
+                </p>
+        </div>
+    </div>
